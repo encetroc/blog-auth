@@ -31,8 +31,13 @@
   <body>
     <nav>
       <ul>
+        <% if (!currentUser) { %>
         <li><a href="/user/signin">signin</a></li>
+        <% } %> <% if (!currentUser) { %>
         <li><a href="/user/login">login</a></li>
+        <% } %> <% if (currentUser) { %>
+        <li><a href="/user/logout">logout</a></li>
+        <% } %>
       </ul>
     </nav>
     <div class="container"><%- body %></div>

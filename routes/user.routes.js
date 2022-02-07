@@ -5,10 +5,12 @@ const { isLoggedIn } = require("../middlewares/guard");
 
 const router = express.Router();
 
+// shows the sign in form
 router.get("/signin", (req, res) => {
   res.render("user/signin");
 });
 
+// handles the creation of a user
 router.post("/signin", async (req, res) => {
   const user = new User();
   user.email = req.body.email;
@@ -21,10 +23,12 @@ router.post("/signin", async (req, res) => {
   }
 });
 
+// shows the log in form
 router.get("/login", (req, res) => {
   res.render("user/login");
 });
 
+// handles the authentication of a user
 router.post("/login", async (req, res) => {
   try {
     const user = await User.findOne({ email: req.body.email });
@@ -40,11 +44,13 @@ router.post("/login", async (req, res) => {
   }
 });
 
+// route for loggin out
 router.get("/logout", (req, res) => {
   req.session.destroy();
   res.redirect("/user/login");
 });
 
+// shows a user's profile page
 router.get("/profile", isLoggedIn, (req, res) => {
   res.render("user/profile");
 });

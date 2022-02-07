@@ -37,6 +37,10 @@
         <li><a href="/user/login">login</a></li>
         <% } %> <% if (currentUser) { %>
         <li><a href="/user/logout">logout</a></li>
+        <% } %> <% if (currentUser) { %>
+        <li><a href="/post/create">create post</a></li>
+        <% } %> <% if (currentUser) { %>
+        <li><a href="/post/viewAll">view all posts</a></li>
         <% } %>
       </ul>
     </nav>

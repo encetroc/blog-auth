@@ -8,10 +8,15 @@ mongoose.connect("mongodb://localhost/blog-v2");
 
 const app = express();
 
+// template engine setup
 app.set("view engine", "ejs");
+// ejs layout setup
 app.use(expressLayouts);
+// middleware to extract the body from the request
 app.use(express.urlencoded({ extended: false }));
+// hooking up the public folder
 app.use(express.static("public"));
+// middleware for setting up the session
 app.use(
   session({
     secret: "helloworld",
@@ -32,11 +37,17 @@ app.use((req, res, next) => {
   next();
 });
 
+// root route
 app.get("/", (req, res) => {
   res.render("home");
 });
 
+// user routes
 const userRouter = require("./routes/user.routes");
 app.use("/user", userRouter);
+
+// post routes
+const postRouter = require("./routes/post.routes");
+app.use("/post", postRouter);
 
 app.listen(3000);

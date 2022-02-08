@@ -41,6 +41,10 @@
         <li><a href="/post/create">create post</a></li>
         <% } %> <% if (currentUser) { %>
         <li><a href="/post/viewAll">view all posts</a></li>
+        <% } %> <% if (currentUser) { %>
+        <li><a href="/post/viewPublic">view public posts</a></li>
+        <% } %> <% if (currentUser) { %>
+        <li><a href="/post/viewPrivate">view private posts</a></li>
         <% } %>
       </ul>
     </nav>

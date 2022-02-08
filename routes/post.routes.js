@@ -14,6 +14,7 @@ router.post("/create", isLoggedIn, async (req, res) => {
   const post = new Post();
   post.title = req.body.title;
   post.description = req.body.description;
+  post.private = req.body.private;
   post.author = req.session.currentUser._id;
   try {
     await post.save();
@@ -29,9 +30,28 @@ router.get("/viewAll", isLoggedIn, async (req, res) => {
   res.render("post/viewAll", { posts });
 });
 
+// show private post
+router.get("/viewPrivate", isLoggedIn, async (req, res) => {
+  const posts = await Post.find({ author: req.session.currentUser._id, private: true });
+  res.render("post/viewAll", { posts });
+});
+
+// shows public posts
+router.get("/viewPublic", isLoggedIn, async (req, res) => {
+  const posts = await Post.find({ private: false });
+  res.render("post/viewAll", { posts });
+});
+
 // show one post
 router.get("/:id", async (req, res) => {
-  const post = await Post.findById(req.params.id).populate('comments');
+  const post = await Post.findById(req.params.id)
+    .populate("comments")
+    .populate("author")
+    .populate({
+      path: "comments",
+      populate: "author",
+    });
+  console.log(post);
   res.render("post/viewOne", { post });
 });
 

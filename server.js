@@ -3,11 +3,14 @@ const mongoose = require("mongoose");
 const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const store = require("connect-mongo");
+const dotenv = require("dotenv");
 
 mongoose.connect("mongodb://localhost/blog-v2");
 
 const app = express();
 
+// environment variables
+dotenv.config();
 // template engine setup
 app.set("view engine", "ejs");
 // ejs layout setup
@@ -50,4 +53,4 @@ app.use("/user", userRouter);
 const postRouter = require("./routes/post.routes");
 app.use("/post", postRouter);
 
-app.listen(3000);
+app.listen(process.env.PORT);

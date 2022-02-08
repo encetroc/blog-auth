@@ -26,7 +26,13 @@ router.post("/create", isLoggedIn, async (req, res) => {
 // shows all posts
 router.get("/viewAll", isLoggedIn, async (req, res) => {
   const posts = await Post.find({ author: req.session.currentUser._id });
-  res.render('post/viewAll', {posts})
+  res.render("post/viewAll", { posts });
+});
+
+// show one post
+router.get("/:id", async (req, res) => {
+  const post = await Post.findById(req.params.id).populate('comments');
+  res.render("post/viewOne", { post });
 });
 
 module.exports = router;

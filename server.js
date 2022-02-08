@@ -53,4 +53,8 @@ app.use("/user", userRouter);
 const postRouter = require("./routes/post.routes");
 app.use("/post", postRouter);
 
+// post routes
+const commentRouter = require("./routes/comment.routes");
+app.use("/comment", commentRouter);
+
 app.listen(process.env.PORT);

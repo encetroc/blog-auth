@@ -35,6 +35,11 @@ const postSchema = mongoose.Schema({
     default: [],
     ref: "User",
   },
+  downvote: {
+    type: [mongoose.SchemaTypes.ObjectId],
+    default: [],
+    ref: "User",
+  },
 });
 
 module.exports = mongoose.model("Post", postSchema);

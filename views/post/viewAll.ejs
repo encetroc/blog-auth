@@ -5,7 +5,8 @@
     <%= post.title %>
     <a href="/post/<%= post.id %>">read</a>
     <a href="/post/upvote/<%= post.id %> ">upvote</a>
-    <span><%= post.upvote.length %> </span>
+    <a href="/post/downvote/<%= post.id %> ">downvote</a>
+    <span><%= post.upvote.length - post.downvote.length %> </span>
   </li>
   <% }) %>
 </ul>

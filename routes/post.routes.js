@@ -68,4 +68,14 @@ router.get("/upvote/:id", isLoggedIn, async (req, res) => {
   res.redirect("/post/viewPublic");
 });
 
+// the downvote route
+router.get("/downvote/:id", isLoggedIn, async (req, res) => {
+  const post = await Post.findById(req.params.id);
+  if (!post.downvote.includes(req.session.currentUser._id)) {
+    post.downvote.push(req.session.currentUser._id);
+    post.save();
+  }
+  res.redirect("/post/viewPublic");
+});
+
 module.exports = router;

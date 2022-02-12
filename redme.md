@@ -2,6 +2,11 @@
 
 1. add username to the user model
 2. add markup feature and the updated at field to the post
+   2.1. add the sanitizedHTML and the markup field to the post model
+
+   2.2. add a pre function to your schema, to generate the sanitized HTML before saving to the database
+   
+   2.3. packages you will be using are `dompurify`, `jsdom` and `marked`
 3. add the ability to edit a post only if the user is the author of that post (updated at field should be updated whenever you update a post)
 4. add the ability to delete a post only if the user is the author of that post
 5. add the ability to delete a comment only if the user is the author of that comment
@@ -13,7 +18,7 @@
 ### part 1
 
 1- change the post model to accept the private field (true/false) by default it is false, type is Boolean
-2- add radio inputs to the post creation form, inside of the post/create template 
+2- add radio inputs to the post creation form, inside of the post/create template
 
 ```
 <div>
@@ -34,5 +39,3 @@
 
 4- have a private post view route
 5- have a public post view route
-
-

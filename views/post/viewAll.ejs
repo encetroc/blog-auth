@@ -4,6 +4,8 @@
   <li>
     <%= post.title %>
     <a href="/post/<%= post.id %>">read</a>
+    <a href="/post/upvote/<%= post.id %> ">upvote</a>
+    <span><%= post.upvote.length %> </span>
   </li>
   <% }) %>
 </ul>

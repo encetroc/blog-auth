@@ -32,7 +32,10 @@ router.get("/viewAll", isLoggedIn, async (req, res) => {
 
 // show private post
 router.get("/viewPrivate", isLoggedIn, async (req, res) => {
-  const posts = await Post.find({ author: req.session.currentUser._id, private: true });
+  const posts = await Post.find({
+    author: req.session.currentUser._id,
+    private: true,
+  });
   res.render("post/viewAll", { posts });
 });
 
@@ -43,7 +46,7 @@ router.get("/viewPublic", isLoggedIn, async (req, res) => {
 });
 
 // show one post
-router.get("/:id", async (req, res) => {
+router.get("/:id", isLoggedIn, async (req, res) => {
   const post = await Post.findById(req.params.id)
     .populate("comments")
     .populate("author")
@@ -53,6 +56,16 @@ router.get("/:id", async (req, res) => {
     });
   console.log(post);
   res.render("post/viewOne", { post });
+});
+
+// the upvote route
+router.get("/upvote/:id", isLoggedIn, async (req, res) => {
+  const post = await Post.findById(req.params.id);
+  if (!post.upvote.includes(req.session.currentUser._id)) {
+    post.upvote.push(req.session.currentUser._id);
+    post.save();
+  }
+  res.redirect("/post/viewPublic");
 });
 
 module.exports = router;

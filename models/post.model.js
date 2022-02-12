@@ -30,6 +30,11 @@ const postSchema = mongoose.Schema({
     type: Boolean,
     default: false,
   },
+  upvote: {
+    type: [mongoose.SchemaTypes.ObjectId],
+    default: [],
+    ref: "User",
+  },
 });
 
 module.exports = mongoose.model("Post", postSchema);

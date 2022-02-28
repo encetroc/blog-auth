@@ -19,10 +19,12 @@ app.use(expressLayouts);
 app.use(express.urlencoded({ extended: false }));
 // hooking up the public folder
 app.use(express.static("public"));
+// required for the app when deployed to Heroku (in production)
+app.set("trust proxy", 1);
 // middleware for setting up the session
 app.use(
   session({
-    secret: "helloworld",
+    secret: process.env.SECRET,
     resave: true,
     saveUninitialized: false,
     cookie: {
@@ -30,7 +32,7 @@ app.use(
       maxAge: 1200000,
     },
     store: store.create({
-      mongoUrl: "mongodb://localhost/blog-v2",
+      mongoUrl: process.env.MONGODB_URL,
     }),
   })
 );

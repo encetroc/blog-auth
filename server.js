@@ -4,13 +4,13 @@ const expressLayouts = require("express-ejs-layouts");
 const session = require("express-session");
 const store = require("connect-mongo");
 const dotenv = require("dotenv");
+// environment variables
+dotenv.config();
 
-mongoose.connect("mongodb://localhost/blog-v2");
+mongoose.connect(process.env.MONGODB_URL);
 
 const app = express();
 
-// environment variables
-dotenv.config();
 // template engine setup
 app.set("view engine", "ejs");
 // ejs layout setup

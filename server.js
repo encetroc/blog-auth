@@ -7,6 +7,7 @@ const dotenv = require("dotenv");
 // environment variables
 dotenv.config();
 
+// env varialble for the database url
 mongoose.connect(process.env.MONGODB_URL);
 
 const app = express();
@@ -19,10 +20,13 @@ app.use(expressLayouts);
 app.use(express.urlencoded({ extended: false }));
 // hooking up the public folder
 app.use(express.static("public"));
+// required for the app when deployed to Heroku (in production)
+app.set("trust proxy", 1);
 // middleware for setting up the session
 app.use(
   session({
-    secret: "helloworld",
+    // env variable for the secret
+    secret: process.env.SECRET,
     resave: true,
     saveUninitialized: false,
     cookie: {
@@ -30,7 +34,8 @@ app.use(
       maxAge: 1200000,
     },
     store: store.create({
-      mongoUrl: "mongodb://localhost/blog-v2",
+      // env varialble for the database url for the session
+      mongoUrl: process.env.MONGODB_URL,
     }),
   })
 );
@@ -57,4 +62,5 @@ app.use("/post", postRouter);
 const commentRouter = require("./routes/comment.routes");
 app.use("/comment", commentRouter);
 
+// env variable for the port
 app.listen(process.env.PORT);
